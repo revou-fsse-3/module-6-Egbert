@@ -5,9 +5,6 @@ class Animal_Service:
     def __init__(self):
         self.animal_repo = Animal_Repo()
 
-    # def get_animal(self):
-    #     animals = self.animal_repo.get_list_animal()
-    #     return [animal.as_dict() for animal in animals]
     def get_animal(self):
         animals = self.animal_repo.get_list_animal()
         return [animal.as_dict() for animal in animals]
