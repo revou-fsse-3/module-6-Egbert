@@ -1,1 +1,0 @@
-[API DOCUMENTATION](https://documenter.getpostman.com/view/32585062/2sA2r6ZREw)
