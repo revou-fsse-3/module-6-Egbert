@@ -23,3 +23,10 @@ class Animal_Repo():
         
         db.session.commit()
         return animal_obj
+
+    def delete_animal(self, id):
+        animal_obj = Animal.query.get(id)
+
+        db.session.delete(animal)
+        db.session.commit()
+        return animal_obj

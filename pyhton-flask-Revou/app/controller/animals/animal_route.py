@@ -125,13 +125,20 @@ def update_animal(animal_id):
 def delete_animal(animal_id):
     animal = Animal.query.get(animal_id)
     try:
-        if not animal:
-            return "Animal not found", 404
+        animal_service = Animal_Service()
 
-        db.session.delete(animal)
-        db.session.commit()
-
-        return "Successfully deleted the animal", 200
+        animal = customer_service.delete_animal(animal_id)
+        if animal == "Animal not found":
+            return api_response(
+                status_code=404,
+                message=animal,
+                data="animal empty"
+            )
+        return api_response(
+            status_code=200,
+            message="deleted",
+            data=animal
+        )
     except Exception as e:
         return api_response(
             status_code=500,

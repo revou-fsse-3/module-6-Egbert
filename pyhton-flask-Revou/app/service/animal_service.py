@@ -27,3 +27,11 @@ class Animal_Service:
     def update_animal(self, id, animal_data_dto):
         update_animal = self.animal_repo.update_animal(id, animal_data_dto)
         return update_animal.as_dict()
+    
+    def delete_animal(self, id):
+        animal = Animal.query.get(id)
+        if not animal:
+            return "Animal not found"
+        
+        deleted_animal = self.animal_repo.delete_animal(id)
+        return deleted_animal.as_dict()
