@@ -42,6 +42,27 @@ def test_post_animal(test_app, mocker):
     assert response.json['data']["species"] == "Tiger"
     assert response.status_code == 201
 
+def test_post_animal_failed(test_app, mocker):
+    data = {
+        "id": 1,
+        "species": "Tiger",
+        "age": "10a",
+        "gender": "Male"
+    }
+    mocker.patch.object(Animal_Service, 'create_animal', return_value=data)
+    
+    # Act
+    with test_app.test_client() as client:
+        response = client.post("/animal/", json=data)
+
+    expected_response = {
+        "species": "Tiger",
+        "age": "10a",
+        "gender": "Male"
+    }
+
+    assert response.status_code == 400
+
 def test_put_animal(test_app, mocker):
     data = {
         "species": "Tiger",
@@ -54,6 +75,19 @@ def test_put_animal(test_app, mocker):
         response = client.put("/animal/2", json=data)
 
     assert response.status_code == 200
+
+def test_put_animal_failed(test_app, mocker):
+    data = {
+        "species": "Tiger",
+        "age": "10a",
+        "gender": "Male"
+    }
+    mocker.patch.object(Animal_Service, 'update_animal', return_value=data)
+
+    with test_app.test_client() as client:
+        response = client.put("/animal/2", json=data)
+
+    assert response.status_code == 400
 
 def test_delete_animal(test_app, mocker):
     expected_response = {
@@ -68,43 +102,12 @@ def test_delete_animal(test_app, mocker):
 
     assert response.status_code == 200
 
+def test_delete_animal_not_found(test_app, mocker):
+    expected_response = "Animal not found"
+    mocker.patch.object(Animal_Service, 'delete_animal', return_value=expected_response)
 
-# def test_put_animal_success(test_app):
-#     data = {
-#         "species": "Elephant",
-#         "age": 12,
-#         "gender": "Female"
-#     }
-#     with test_app.test_client() as client:
-#         # Act
-#         response = client.put("/animal/2", json=data)
+    with test_app.test_client() as client:
+        response = client.delete("/animal/2")
 
-#     assert response.status_code == 200
-
-# def test_put_animal_failed(test_app):
-#     data = {}
-#     with test_app.test_client() as client:
-#         # Act
-#         response = client.put("/animal/1", json=data)
-
-#     assert response.status_code == 400
-
-# def test_delete_animal_success(test_app):
-#     data = {
-#         "species": "Panda",
-#         "age": 10,
-#         "gender": "Male"
-#     }
-#     with test_app.test_client() as client:
-#         # Act
-#         response = client.put("/animal/9", json=data)
-
-#     assert response.status_code == 200
-
-# def test_delete_animal_failed(test_app):
-#     data = {}
-#     with test_app.test_client() as client:
-#         # Act
-#         response = client.put("/animal/9", json=data)
-
-#     assert response.status_code == 400
+    assert response.status_code == 404
+    assert response.json['data'] == "Animal empty"

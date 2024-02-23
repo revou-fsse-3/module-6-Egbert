@@ -34,7 +34,7 @@ def search_animal():
         request_data = request.args
         animal_service = Animal_Service()
 
-        animals = animal_service.search_animal(request_data["species"])
+        animals = animal_service.search_species_animal(request_data["species"])
 
         return api_response(
             status_code=200,
@@ -131,7 +131,7 @@ def delete_animal(animal_id):
             return api_response(
                 status_code=404,
                 message=animal,
-                data="animal empty"
+                data="Animal empty"
             )
         return api_response(
             status_code=200,

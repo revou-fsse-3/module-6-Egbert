@@ -10,8 +10,8 @@ class Animal_Service:
         animals = self.animal_repo.get_list_animal()
         return [animal.as_dict() for animal in animals]
 
-    def search_animal(self, species):
-        animals = self.animal_repo.search_animal(species)
+    def search_species_animal(self, species):
+        animals = self.animal_repo.search_species_animal(species)
         return [animal.as_dict() for animal in animals]
 
     def create_animal(self, species):
