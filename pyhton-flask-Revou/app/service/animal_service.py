@@ -17,7 +17,7 @@ class Animal_Service:
     def create_animal(self, species):
         animal = Animal()
 
-        animal.species = animal_data_dto.name
+        animal.species = animal_data_dto.species
         animal.age = animal_data_dto.age
         animal.gender = animal_data_dto.gender
         
