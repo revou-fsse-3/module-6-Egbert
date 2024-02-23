@@ -123,11 +123,10 @@ def update_animal(animal_id):
 
 @animal_blueprint.route("/<int:animal_id>", methods=["DELETE"])
 def delete_animal(animal_id):
-    animal = Animal.query.get(animal_id)
     try:
         animal_service = Animal_Service()
 
-        animal = customer_service.delete_animal(animal_id)
+        animal = animal_service.delete_animal(animal_id)
         if animal == "Animal not found":
             return api_response(
                 status_code=404,
