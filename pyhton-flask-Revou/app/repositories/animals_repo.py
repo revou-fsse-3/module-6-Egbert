@@ -5,6 +5,11 @@ class Animal_Repo():
     def get_list_animal(self):
         animals = Animal.query.all()
         return animals
+    
+    def create_animal(self, animal):
+        db.session.add(animal)
+        db.session.commit()
+        return animal
 
     def search_animal(self, species):
         animals = Animal.query.filter(Animal.species.like(f"%{species}%")).all()

@@ -4,6 +4,7 @@ from app.models.animal import Animal
 from app.utils.api_response import api_response
 from app.service.animal_service import Animal_Service
 from app.controller.animals.schema.update_animal_request import Update_animal_request
+from app.controller.animals.schema.create_animal_request import Create_animal_request
 from pydantic import ValidationError
 from app.repositories.animals_repo import Animal_Repo
 
@@ -67,15 +68,23 @@ def get_animal(animal_id):
 def create_animal():
     try:
         data = request.json
-        
-        animal = Animal()
-        animal.species = data["species"]
-        animal.age = data["age"]
-        animal.gender = data["gender"]
-        db.session.add(animal)
-        db.session.commit()
-    
-        return "Animal created", 201
+        update_animal_request = Create_animal_request(**data)
+
+        animal_service = Animal_Service()
+
+        animals = animal_service.create_animal(update_animal_request)
+
+        return api_response(
+            status_code=201,
+            message="Successfully animal created",
+            data=animals
+        )
+    except ValidationError as e:
+        return api_response(
+            status_code=400,
+            message=e.errors(),
+            data={}
+        )
     except Exception as e:
         return api_response(
             status_code=500,
