@@ -21,7 +21,11 @@ def get_list_animal():
             data=animals
         )
     except Exception as e:
-        return e, 500
+        return api_response(
+            status_code=500,
+            message=str(e),
+            data={}
+        )
 
 @animal_blueprint.route("/search", methods=["GET"])
 def search_animal():
@@ -37,7 +41,11 @@ def search_animal():
             data=animals
         )
     except Exception as e:
-        return e, 500
+        return api_response(
+            status_code=500,
+            message=str(e),
+            data={}
+        )
 
 @animal_blueprint.route("/<int:animal_id>", methods=["GET"])
 def get_animal(animal_id):
@@ -49,7 +57,11 @@ def get_animal(animal_id):
 
         return animals.as_dict(), 200
     except Exception as e:
-        return e, 500
+        return api_response(
+            status_code=500,
+            message=str(e),
+            data={}
+        )
 
 @animal_blueprint.route("/", methods=["POST"])
 def create_animal():
@@ -65,7 +77,11 @@ def create_animal():
     
         return "Animal created", 201
     except Exception as e:
-        return str(e), 500
+        return api_response(
+            status_code=500,
+            message=str(e),
+            data={}
+        )
 
 @animal_blueprint.route("/<int:animal_id>", methods=["PUT"])
 def update_animal(animal_id):
@@ -90,7 +106,11 @@ def update_animal(animal_id):
             data={}
         )
     except Exception as e:
-        return str(e), 500
+        return api_response(
+            status_code=500,
+            message=str(e),
+            data={}
+        )
 
 @animal_blueprint.route("/<int:animal_id>", methods=["DELETE"])
 def delete_animal(animal_id):
@@ -104,4 +124,8 @@ def delete_animal(animal_id):
 
         return "Successfully deleted the animal", 200
     except Exception as e:
-        return str(e), 500
+        return api_response(
+            status_code=500,
+            message=str(e),
+            data={}
+        )
