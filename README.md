@@ -1,4 +1,4 @@
-<h1>Revou Asignment by <bold>Egbert Felica M.</bold> Basic Zoo API <h1>
+<h1>Revou Asignment by <bold>Egbert Felica W.</bold> Basic Zoo API <h1>
 
 # WELCOME TO MY ZOO
 
